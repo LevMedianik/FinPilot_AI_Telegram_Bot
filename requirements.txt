@@ -1,0 +1,16 @@
+python-telegram-bot==20.6
+httpx<0.28
+python-dotenv
+PyMuPDF
+python-docx
+
+langchain>=0.2,<0.4
+langchain-community>=0.2,<0.4
+langchain-huggingface>=0.0.3,<0.2
+
+sentence-transformers
+faiss-cpu
+
+google-auth
+google-auth-oauthlib
+google-api-python-client

@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+*.bak
+*.tmp
+
+# Virtual environments
+venv/
+.env
+*.env
+
+# FAISS index and temporary data
+faiss_index/
+tokens/
+data/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Other
+*.faiss
+
+# Python build
+dist/
+build/
+*.egg-info/
+
+# Torch / HF cache
+.cache/
+huggingface/
+hf_cache/
+**/.hf_cache/
+**/models/
+
+# Local credentials
+credentials*.json
+token*.json
