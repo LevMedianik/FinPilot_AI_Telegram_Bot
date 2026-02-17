@@ -154,7 +154,8 @@ It serves as:
 ### 📌 Status
 
 v1.0 – Stable demo
-Focus: reliability, reproducibility, and safe behavior.
+
+---
 
 ### 👤 Author
 
@@ -385,7 +386,6 @@ docker run --rm -it `
 ### 📌 Статус проекта
 
 v1.0 – Stable demo
-Фокус на корректности, воспроизводимости и отказе от галлюцинаций.
 
 ---
 
