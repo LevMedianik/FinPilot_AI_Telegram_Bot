@@ -77,22 +77,20 @@ After ingestion, the bot indexes the document and enables /askfile and /summary.
 ---
 
 ### ⚙️ Configuration (.env)
-
+```
 TELEGRAM_TOKEN=...
 OPENROUTER_API_KEY=...
 HUGGINGFACEHUB_API_TOKEN=...
-
 EMBED_MODEL=sentence-transformers/all-MiniLM-L6-v2
-
 RAG_MIN_CONTEXT_CHARS=300
 RAG_MAX_L2_DISTANCE=1.0
-
+```
 ### ▶️ Local Setup
 
 1) Requirements
 
-Python 3.11–3.12
-Telegram account
+- Python 3.11–3.12
+- Telegram account
 
 2) Installation
 ```
