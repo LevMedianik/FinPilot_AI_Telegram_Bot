@@ -1,3 +1,240 @@
+## EN: 🤖 FinPilot – AI Assistant with Controlled Document-Based RAG
+
+FinPilot is a Telegram bot powered by Retrieval-Augmented Generation (RAG) that answers strictly based on uploaded documents and correctly refuses when information is not present in the knowledge base.  
+The project is designed for business use cases: fintech, marketing, analytics, compliance, and internal knowledge bases.
+
+---
+
+### 🚀 Features
+
+- 📄 Document upload (PDF / DOCX / TXT)
+- 🔍 Document-based search and Q&A (RAG)
+- 🧾 Answers with source citations
+- 🚫 Controlled refusal outside context (no hallucinations)
+- 🧠 Live conversation mode (LLM chat)
+- 📑 Document summarization (/summary)
+- 💬 Proper Telegram message formatting (HTML)
+
+---
+
+### 🧩 Architecture
+
+```
+Document → Text Extraction → Embeddings → FAISS
+↓
+User → Query → Retrieval → RAG-Gate → LLM → Answer / Refusal
+```
+
+
+Key Principles:
+- Strict RAG – answers strictly grounded in context
+- Citations-first – every statement supported by a document quote
+- Fail-safe – if no data is found, the bot explicitly states it
+
+---
+
+### 🛡️ Answer Quality Control (Anti-Hallucination)
+
+Several protection layers are implemented:
+
+1. Semantic retrieval (FAISS). Only the most relevant document fragments are extracted.
+2. Distance gate. An answer is generated only if the similarity distance is below a defined threshold.
+3. Overlap gate. Checks for keyword overlap between the query and retrieved context.
+4. Strict prompt. The LLM is instructed to:
+    1) answer strictly from context  
+    2) provide citations  
+    3) refuse if no relevant data is available  
+
+---
+
+### 🧪 Example Behavior
+
+Correct Answer  
+/askfile how is anti-fraud system efficiency measured  
+
+Response:
+
+Point: prevention loss rate and impact on user experience.  
+Quote: "Anti-fraud efficiency is measured not only by the level of prevented losses, but also by its impact on user experience and conversion."
+
+Correct Refusal  
+/askfile why did life originate on Earth  
+
+Response:
+
+There is no information in the current document database to answer this question.  
+I respond strictly based on uploaded materials.
+
+---
+
+### 🧾 Bot Commands
+
+| Command              | Description |
+|----------------------|-------------|
+| /start               | Start the bot |
+| /help                | List available commands |
+| /askfile [question]  | Ask a question about the uploaded document |
+| /summary             | Generate a short document summary |
+| /reset               | Clear current file context to upload a new document |
+| /syncdrive           | Connect Google Drive and select a document |
+
+---
+
+### 📂 Supported Formats
+
+PDF, DOCX, TXT  
+
+When uploading a file, the bot replies:  
+"Reading document..."
+
+After indexing:  
+"Document processed. Use /askfile [question] for quick answers or /summary for a concise overview."
+
+---
+
+### ⚙️ Configuration (.env)
+```
+TELEGRAM_TOKEN=...
+OPENROUTER_API_KEY=...
+HUGGINGFACEHUB_API_TOKEN=...
+EMBED_MODEL=sentence-transformers/all-MiniLM-L6-v2
+RAG_MIN_CONTEXT_CHARS=300
+RAG_MAX_L2_DISTANCE=1.0
+
+SYSTEM_PROMPT=You are a document-based assistant. Answer strictly using context facts.
+SYSTEM_PROMPT_CHAT=You are a helpful business assistant. Do not invent facts.
+```
+
+---
+
+### ▶️ Run Locally
+
+#### 1) Requirements
+
+- Python 3.11–3.12  
+- Telegram installed  
+
+#### 2) Clone Repository
+```
+git clone https://github.com/LevMedianik/FinPilot_AI_Telegram_Bot.git
+cd finpilot_bot
+```
+
+#### 3) Create Virtual Environment
+
+Windows (PowerShell / cmd)
+```
+python -m venv venv
+venv\Scripts\activate
+```
+Linux / macOS
+```
+python3 -m venv venv
+source venv/bin/activate
+```
+#### 4) Install Dependencies
+```
+pip install --upgrade pip setuptools wheel
+pip install -r requirements.txt
+```
+
+#### 5) Configure .env
+
+Create a `.env` file in the project root:
+```
+TELEGRAM_TOKEN=...
+OPENROUTER_API_KEY=...
+HUGGINGFACEHUB_API_TOKEN=...
+
+RAG_MIN_CONTEXT_CHARS=300
+RAG_MAX_L2_DISTANCE=1.0
+```
+#### 6) Start the Bot
+```python bot.py```
+
+#### 7) Quick Test
+
+In Telegram:
+```/start```
+Start chatting or upload a PDF/DOCX/TXT document.  
+The bot will reply: “Reading document...”
+
+Use: ```/askfile <question>``` or ```/summary```
+
+---
+
+### 🐳 Run with Docker
+
+#### 1) Requirements
+
+Docker installed and running.
+
+#### 2) Build Image
+```docker build --no-cache -t finpilot:latest .```
+
+#### 3) Run Container with .env
+
+Linux / macOS / Git Bash
+```
+docker run --rm -it
+--env-file .env
+-v "$(pwd)/data:/app/data"
+-v "$(pwd)/faiss_index:/app/faiss_index"
+finpilot:latest
+```
+Windows PowerShell
+```
+docker run --rm -it --env-file .env
+-v "${PWD}\data:/app/data" -v "${PWD}\faiss_index:/app/faiss_index"
+finpilot:latest
+```
+
+#### 4) Verification
+
+Same as local run: ```/start```
+
+Upload a file → “Reading document...”  
+Use `/askfile ...` or `/summary`.
+
+---
+
+### 🛠️ Technologies
+
+- Python 3.12  
+- Telegram Bot API  
+- OpenRouter (LLM)  
+- HuggingFace Embeddings  
+- FAISS  
+- LangChain  
+- PyMuPDF / python-docx  
+
+---
+
+### 🎯 Project Purpose
+
+This project demonstrates a controlled RAG approach for clients, teams, and organizations working in fintech, analytics, and marketing.  
+The primary objective is to showcase a practical AI assistant that answers strictly based on documents and properly refuses outside context.
+
+It also serves as a universal demonstration solution:
+- for client presentations;  
+- for technical evaluation during job applications;  
+- as a foundation for scaling into a corporate assistant, compliance AI agent, or internal knowledge bot.  
+
+---
+
+### 📌 Project Status
+
+v1.0 – Stable demo
+
+---
+
+### 👤 Author
+
+Lev Medianik  
+GitHub: https://github.com/LevMedianik
+
+---
+
 ## RU: 🤖 FinPilot – AI-ассистент с контролируемым RAG по документам
 
 FinPilot – Telegram-бот с Retrieval-Augmented Generation (RAG), который отвечает строго на основе загруженных документов и корректно отказывает, если информации нет в базе.
@@ -20,7 +257,7 @@ FinPilot – Telegram-бот с Retrieval-Augmented Generation (RAG), котор
 ### 🧩 Архитектура
 ```
 Документ → Извлечение текста → Embeddings → FAISS
-                                   ↓
+↓
 Пользователь → Запрос → Retrieval → RAG-Gate → LLM → Ответ / Отказ
 ```
 
@@ -99,17 +336,17 @@ SYSTEM_PROMPT_CHAT=Ты – полезный бизнес-ассистент. Н
 ---
 
 ### ▶️ Запуск локально
-1) Требования
+#### 1) Требования
 
 Python 3.11–3.12
 Установлен Telegram
 
-2) Установка
+#### 2) Установка
 ```
 git clone https://github.com/LevMedianik/FinPilot_AI_Telegram_Bot.git
 cd finpilot_bot
 ```
-3) Виртуальное окружение
+#### 3) Виртуальное окружение
 
 Windows (PowerShell / cmd)
 ```
@@ -122,12 +359,12 @@ Linux / macOS
 python3 -m venv venv
 source venv/bin/activate
 ```
-4) Установка зависимостей
+#### 4) Установка зависимостей
 ```
 pip install --upgrade pip setuptools wheel
 pip install -r requirements.txt
 ```
-5) Настройка .env
+#### 5) Настройка .env
 
 Создайте файл .env в корне проекта:
 ```
@@ -138,32 +375,30 @@ HUGGINGFACEHUB_API_TOKEN=...
 RAG_MIN_CONTEXT_CHARS=300
 RAG_MAX_L2_DISTANCE=1.0
 ```
-6) Запуск
+#### 6) Запуск
 ```
-python bot.py
+```python bot.py```
 ```
-7) Быстрый тест
+#### 7) Быстрый тест
 
-В Telegram:
-
-/start
+В Telegram: ```/start```
 
 начните общение или отправьте документ PDF/DOCX/TXT, бот ответит «Читаю документ...»
 
-используйте /askfile <вопрос> или /summary
+используйте ```/askfile <вопрос>``` или ```/summary```
 
 ---
 
 ### 🐳 Запуск через Docker
-1) Требования
+#### 1) Требования
 
 Docker установлен и запущен
 
-2) Сборка образа
+#### 2) Сборка образа
 ```
 docker build --no-cache -t finpilot:latest .
 ```
-3) Запуск контейнера с .env
+#### 3) Запуск контейнера с .env
 Linux / macOS / Git Bash
 ```
 docker run --rm -it \
@@ -180,15 +415,13 @@ docker run --rm -it `
   -v "${PWD}\faiss_index:/app/faiss_index" `
   finpilot:latest
 ```
-4) Проверка
+#### 4) Проверка
 
-Точно так же, как локально:
-
-/start
+Точно так же, как локально: ```/start```
 
 загрузка файла – «Читаю документ...»
 
-/askfile ... или /summary
+```/askfile <вопрос>``` или ```/summary```
 
 ---
 
