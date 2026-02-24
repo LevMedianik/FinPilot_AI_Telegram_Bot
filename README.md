@@ -456,5 +456,5 @@ v1.0 – Stable demo
 
 ### 👤 Автор
 
-Лев Медяник
+Лев Медяник    
 GitHub: https://github.com/LevMedianik
