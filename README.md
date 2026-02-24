@@ -1,169 +1,3 @@
-## EN: 🤖 FinPilot – Controlled RAG AI Assistant for Document-Based Q&A
-
-FinPilot is a Telegram-based AI assistant built with a controlled Retrieval-Augmented Generation (RAG) architecture.
-It answers strictly based on uploaded documents and safely refuses when relevant information is not found.
-
-The system is designed for real-world business use cases such as fintech, analytics, internal knowledge bases, compliance documentation, and marketing operations.
-
----
-
-### 🚀 Features
-
-- 📄 Document ingestion (PDF / DOCX / TXT)
-- 🔍 Retrieval-based question answering over documents (RAG)
-- 🧾 Answers with source citations
-- 🚫 Controlled refusal outside document context (anti-hallucination)
-- 💬 General-purpose LLM chat mode
-- 📑 Document summarization (/summary)
-- 🧠 Structured HTML message formatting for Telegram
-
----
-
-### 🧩 Architecture
-
-```
-Document → Text Extraction → Embeddings → FAISS
-                                      ↓
-User → Query → Retrieval → RAG Gate → LLM → Answer / Refusal
-```
-
-Core Design Principles
-- Strict RAG – Answers only based on retrieved context
-- Citations-first – Each claim supported by document excerpts
-- Fail-safe behavior – Honest refusal when no evidence is found
-
-### 🛡️ Anti-Hallucination Controls
-
-Multiple reliability layers are implemented:
-
-1. Semantic retrieval (FAISS) – Only relevant fragments are retrieved.
-2. Distance gate – Response generated only if vector similarity passes a threshold.
-3. Overlap gate – Checks keyword intersection between query and retrieved context.
-4. Strict prompting – The LLM must:
-  1) Answer strictly from context
-  2) Provide citations
-  3) Refuse when insufficient data is available
-
----
-
-### 🧪 Example Behavior
-
-Valid Answer
-
-Query:
-/askfile How is fraud detection effectiveness measured?
-
-Response:
-
-Fraud detection effectiveness is measured not only by prevented losses, but also by its impact on user experience and conversion.
-Citation: "Fraud detection effectiveness is measured not only by prevented losses, but also by its impact on user experience and conversion."
-
-Safe Refusal
-
-Query:
-/askfile Why did life originate on Earth?
-
-Response:
-
-The current document database does not contain information relevant to this question.
-I only answer based on uploaded materials.
-
----
-
-### 📂 Supported Formats: PDF, DOCX, TXT
-
-After ingestion, the bot indexes the document and enables /askfile and /summary.
-
----
-
-### ⚙️ Configuration (.env)
-```
-TELEGRAM_TOKEN=...
-OPENROUTER_API_KEY=...
-HUGGINGFACEHUB_API_TOKEN=...
-EMBED_MODEL=sentence-transformers/all-MiniLM-L6-v2
-RAG_MIN_CONTEXT_CHARS=300
-RAG_MAX_L2_DISTANCE=1.0
-```
-### ▶️ Local Setup
-
-1) Requirements
-
-- Python 3.11–3.12
-- Telegram account
-
-2) Installation
-```
-git clone https://github.com/LevMedianik/finpilot_bot
-cd finpilot_bot
-python -m venv venv
-source venv/bin/activate   # or venv\Scripts\activate on Windows
-pip install -r requirements.txt
-```
-
-3) Run:
-```
-python bot.py
-```
-
----
-
-### 🐳 Docker Setup
-
-Build image:
-```
-docker build --no-cache -t finpilot:latest .
-```
-
-Run container:
-```
-docker run --rm -it \
-  --env-file .env \
-  -v "$(pwd)/data:/app/data" \
-  -v "$(pwd)/faiss_index:/app/faiss_index" \
-  finpilot:latest
-```
-
----
-
-### 🛠️ Tech Stack
-
-- Python 3.12
-- FastAPI
-- LangChain
-- FAISS
-- HuggingFace Embeddings
-- OpenRouter (LLM backend)
-- PyMuPDF / python-docx
-- Docker
-
----
-
-### 🎯 Purpose
-
-This project demonstrates a production-oriented, controlled RAG architecture suitable for business environments requiring reliability and transparency.
-
-It serves as:
-
-- A technical portfolio project
-- A base architecture for enterprise knowledge assistants
-- A scalable foundation for internal AI document agents
-
----
-
-### 📌 Status
-
-v1.0 – Stable demo
-
----
-
-### 👤 Author
-
-Lev Medianik
-AI / ML Engineer
-
-GitHub: https://github.com/LevMedianik
-
 ## RU: 🤖 FinPilot – AI-ассистент с контролируемым RAG по документам
 
 FinPilot – Telegram-бот с Retrieval-Augmented Generation (RAG), который отвечает строго на основе загруженных документов и корректно отказывает, если информации нет в базе.
@@ -255,9 +89,7 @@ FinPilot – Telegram-бот с Retrieval-Augmented Generation (RAG), котор
 TELEGRAM_TOKEN=...
 OPENROUTER_API_KEY=...
 HUGGINGFACEHUB_API_TOKEN=...
-
 EMBED_MODEL=sentence-transformers/all-MiniLM-L6-v2
-
 RAG_MIN_CONTEXT_CHARS=300
 RAG_MAX_L2_DISTANCE=1.0
 
@@ -272,9 +104,9 @@ SYSTEM_PROMPT_CHAT=Ты – полезный бизнес-ассистент. Н
 Python 3.11–3.12
 Установлен Telegram
 
-2) Клонирование проекта
+2) Установка
 ```
-git clone <https://github.com/LevMedianik?tab=repositories>
+git clone https://github.com/LevMedianik/FinPilot_AI_Telegram_Bot.git
 cd finpilot_bot
 ```
 3) Виртуальное окружение
@@ -391,7 +223,5 @@ v1.0 – Stable demo
 
 ### 👤 Автор
 
-Lev Medianik
-AI / ML Engineer
-
+Лев Медяник
 GitHub: https://github.com/LevMedianik
