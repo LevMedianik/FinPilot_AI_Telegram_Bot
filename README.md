@@ -322,7 +322,7 @@ FinPilot – Telegram-бот с Retrieval-Augmented Generation (RAG), котор
 ---
 
 ### ⚙️ Конфигурация (.env)
-
+```
 TELEGRAM_TOKEN=...
 OPENROUTER_API_KEY=...
 HUGGINGFACEHUB_API_TOKEN=...
@@ -332,7 +332,7 @@ RAG_MAX_L2_DISTANCE=1.0
 
 SYSTEM_PROMPT=Ты – ассистент для ответов по документам. Отвечай только фактами из контекста.
 SYSTEM_PROMPT_CHAT=Ты – полезный бизнес-ассистент. Не выдумывай факты.
-
+```
 ---
 
 ### ▶️ Запуск локально
